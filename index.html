@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Brain Tumor Detection</title>
+    <link rel="stylesheet" type="text/css" href="/static/styles.css">
+</head>
+<body>
+
+<div class="header">
+    <h1>Brain Tumor Detection Portal</h1>
+</div>
+
+<div class="box">
+    <div class="block">
+        <h2>Welcome to our Brain Tumor Detection Portal</h2>
+        <p>Our Brain Tumor Detection Portal offers a streamlined process for individuals to upload their MRI scans for evaluation. MRI scans are a powerful tool used by medical professionals to visualize the internal structures of the brain, enabling the detection of abnormalities such as tumors.</p>
+    </div>
+    <div class="block">
+        <h2>Empowering Early Detection</h2>
+        <p>Detecting brain tumors early is crucial for timely intervention and effective treatment. By utilizing our Brain Tumor Detection Portal, individuals can proactively monitor their brain health and seek medical attention promptly if abnormalities are detected. Early detection significantly improves treatment outcomes and enhances the likelihood of successful recovery.</p>
+    </div>
+    <div class="block">
+        <h2>Get Started</h2>
+        <p>Take the first step towards proactive brain health by uploading your MRI scan today. Our user-friendly interface and efficient analysis process make it easy to obtain valuable insights into your neurological well-being.</p>
+    </div>
+</div>
+
+
+
+ 
+    <div class="container">
+        <h1>Brain Tumor Detection</h1>
+        
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+
+        <div id="uploadSuccessMessage" class="success-message" style="display: none;">
+            <p>Image chosen successfully!</p>
+        </div>
+
+        <form method="post" enctype="multipart/form-data">
+            <label for="file" class="choose-image-btn">Choose an image</label>
+            <input type="file" name="file" id="file" accept=".jpg, .jpeg, .png" required onchange="showUploadedImage(this)">
+            
+           
+            <button type="submit">Upload & Detect</button>
+        </form>
+
+        <div id="uploadedImageContainer" style="display: none;">
+            <h2>Uploaded Image:</h2>
+            <img id="uploadedImage" src="#" alt="Uploaded Image">
+        </div>
+
+        {% if result is not none %}
+            <h2>Result:</h2>
+            {% if result == 0 %}
+                <p>No brain tumor detected</p>
+            {% else %}
+                <p>Brain tumor detected</p>
+            {% endif %}
+        {% endif %}
+        <div id="resultContainer" style="display: none;">
+            <h2>Result:</h2>
+            <div id="accuracy"></div>
+            <p id="prediction"></p>
+        </div>
+    </div>
+
+
+<script>
+    
+    function showUploadedImage(input) {
+    var uploadSuccessMessage = document.getElementById("uploadSuccessMessage");
+    uploadSuccessMessage.style.display = "block";
+
+    var uploadedImageContainer = document.getElementById("uploadedImageContainer");
+    uploadedImageContainer.style.display = "block";
+
+    var uploadedImage = document.getElementById("uploadedImage");
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            uploadedImage.src = e.target.result;
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+
+
+
+
+
+</script>
+
+</body>
+</html>
